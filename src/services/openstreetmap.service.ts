@@ -1,6 +1,7 @@
-import osmtogeojson from 'osmtogeojson';
+import osmtogeojson from '../shared/hack';
 import { FeatureCollection, GeometryObject } from 'geojson';
 import { AABB, GeometryProperties } from '../shared/models';
+import { DOMParser } from 'xmldom';
 
 export function getMapDataByBB({
   minLat,
@@ -19,5 +20,5 @@ export function getMapDataByBB({
 }
 
 function parseXml(xmlStr: string): Document {
-  return new window.DOMParser().parseFromString(xmlStr, 'text/xml');
+  return new DOMParser().parseFromString(xmlStr, 'text/xml');
 }

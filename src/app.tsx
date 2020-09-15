@@ -93,10 +93,14 @@ function App() {
               onChange={handleAabbChange('maxLng')}
             />
           </label>
-          <input type="submit" onClick={handleSubmit} />
+          <input type="submit" onClick={handleSubmit} value="Get Data" />
         </h5>
       </header>
-      {error && <h6 className="error">{error}</h6>}
+      {error && (
+        <h6 className="error" role="alert">
+          {error}
+        </h6>
+      )}
       {featureCollection === null ? (
         <h6>No Data</h6>
       ) : (

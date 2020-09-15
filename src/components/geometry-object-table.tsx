@@ -123,7 +123,7 @@ const renderPolygon = (polygon: Polygon) => (
 
 const renderMultiPolygon = (multiPolygon: MultiPolygon) => (
   <div>
-    Polygon: [
+    MultiPolygon: [
     {multiPolygon.coordinates.map((positions: Position[][], i: number) => (
       <React.Fragment key={`multi-polygon-${i}`}>
         [
