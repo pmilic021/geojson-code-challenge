@@ -1,19 +1,13 @@
 import osmtogeojson from 'osmtogeojson';
 import { FeatureCollection, GeometryObject } from 'geojson';
-
-export interface AABB {
-  minLat: number;
-  maxLat: number;
-  minLng: number;
-  maxLng: number;
-}
+import { AABB, GeometryProperties } from '../shared/models';
 
 export function getMapDataByBB({
   minLat,
   maxLat,
   minLng,
   maxLng,
-}: AABB): Promise<FeatureCollection<GeometryObject>> {
+}: AABB): Promise<FeatureCollection<GeometryObject, GeometryProperties>> {
   return fetch(
     `https://www.openstreetmap.org/api/0.6/map?bbox=${minLng},${minLat},${maxLng},${maxLat}`
   )

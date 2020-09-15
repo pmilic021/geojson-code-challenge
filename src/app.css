@@ -1,8 +1,8 @@
-.App {
+.app {
   text-align: center;
 }
 
-.App-header {
+.app-header {
   background-color: #282c34;
   font-size: calc(10px + 2vmin);
   color: white;
@@ -11,4 +11,8 @@
 label {
   margin-left: 4px;
   margin-right: 4px;
+}
+
+.error {
+  color: red;
 }

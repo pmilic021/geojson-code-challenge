@@ -1,58 +1,70 @@
 import React, { useState } from 'react';
 import './app.css';
-import { AABB, getMapDataByBB } from './openstreetmap.service';
+import { getMapDataByBB } from './services/openstreetmap.service';
 import { FeatureCollection, GeometryObject } from 'geojson';
-import FeatureCollectionTable from './geojson/feature-collection-table';
+import FeatureCollectionTable from './components/feature-collection-table';
+import { AABB, GeometryProperties } from './shared/models';
+import { formatNumber, isValidAabb, parseNumber } from './shared/utils';
 
 function App() {
   const [featureCollection, setFeatureCollection] = useState<FeatureCollection<
-    GeometryObject
+    GeometryObject,
+    GeometryProperties
   > | null>(null);
 
-  const [aabb, setAabb] = useState<AABB>({
-    minLat: 10,
-    maxLat: 10.1,
-    minLng: 10,
-    maxLng: 10.1,
-  });
+  const [aabb, setAabb] = useState<AABB>({});
+
+  const [error, setError] = useState<String | null>(null);
 
   const handleAabbChange = (key: keyof AABB) => (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const parsedValue = Number.parseFloat(event.target.value);
-    if (!isNaN(parsedValue)) {
+    setError(null);
+
+    const parsedValue = parseNumber(event.target.value);
+
+    // `Number.isFinite` is used to filter out `NaN`
+    if (parsedValue === undefined || Number.isFinite(parsedValue)) {
       setAabb({
         ...aabb,
         [key]: parsedValue,
       });
     } else {
-      alert('Allowed are only numerals and comma sign');
+      setError('Only numbers are allowed');
     }
   };
 
   const getGeoData = () => {
     getMapDataByBB(aabb).then(
       (result) => {
-        console.log('got featureCollection: ', result);
         setFeatureCollection(result);
+        setError(null);
       },
       (error) => {
         console.error(error);
-        alert(error);
+        setError(error);
       }
     );
   };
 
+  const handleSubmit = () => {
+    if (isValidAabb(aabb)) {
+      getGeoData();
+    } else {
+      setError('AABB data are not valid');
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
+    <div className="app">
+      <header className="app-header">
         <p>GeoJSON Code Challenge</p>
         <h5>
           Pick an AABB area =&gt;
           <label>
             MinLat:
             <input
-              value={aabb.minLat}
+              value={formatNumber(aabb.minLat)}
               type="number"
               onChange={handleAabbChange('minLat')}
             />
@@ -60,7 +72,7 @@ function App() {
           <label>
             MaxLat:
             <input
-              value={aabb.maxLat}
+              value={formatNumber(aabb.maxLat)}
               type="number"
               onChange={handleAabbChange('maxLat')}
             />
@@ -68,7 +80,7 @@ function App() {
           <label>
             MinLng:
             <input
-              value={aabb.minLng}
+              value={formatNumber(aabb.minLng)}
               type="number"
               onChange={handleAabbChange('minLng')}
             />
@@ -76,14 +88,15 @@ function App() {
           <label>
             MaxLng:
             <input
-              value={aabb.maxLng}
+              value={formatNumber(aabb.maxLng)}
               type="number"
               onChange={handleAabbChange('maxLng')}
             />
           </label>
-          <input type="submit" onClick={getGeoData} />
+          <input type="submit" onClick={handleSubmit} />
         </h5>
       </header>
+      {error && <h6 className="error">{error}</h6>}
       {featureCollection === null ? (
         <h6>No Data</h6>
       ) : (

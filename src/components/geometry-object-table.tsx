@@ -18,7 +18,7 @@ import {
   isMultiPolygon,
   isPoint,
   isPolygon,
-} from './gojson.utils';
+} from '../shared/utils';
 
 interface GeometryObjectTableProps {
   geometry: GeometryObject;

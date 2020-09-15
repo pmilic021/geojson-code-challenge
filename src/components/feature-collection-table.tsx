@@ -1,16 +1,20 @@
 import React from 'react';
 import { FeatureCollection, GeometryObject, Feature } from 'geojson';
 import GeometryObjectTable from './geometry-object-table';
+import { GeometryProperties } from '../shared/models';
 
 interface FeatureCollectionTableProps {
-  collection: FeatureCollection<GeometryObject>;
+  collection: FeatureCollection<GeometryObject, GeometryProperties>;
 }
 
 function FeatureCollectionTable({ collection }: FeatureCollectionTableProps) {
   return (
     <div className="App">
       {collection.features.map(
-        (feature: Feature<GeometryObject>, index: number) => (
+        (
+          feature: Feature<GeometryObject, GeometryProperties>,
+          index: number
+        ) => (
           <div key={`feature-${index}`}>
             <h3>ID: {feature.id}</h3>
             <hr />
@@ -27,13 +31,13 @@ function FeatureCollectionTable({ collection }: FeatureCollectionTableProps) {
   );
 }
 
-const renderProperties = (properties: any) =>
+const renderProperties = (properties: GeometryProperties) =>
   Object.keys(properties).map((key, index) => (
     <div key={`property-${index}`}>
       <i>
         <b>{key}: </b>
       </i>
-      <span>{properties[key].toString()}</span>
+      <span>{properties[key]}</span>
     </div>
   ));
 
