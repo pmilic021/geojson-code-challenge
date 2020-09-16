@@ -1,13 +1,13 @@
 import React from 'react';
 import { FeatureCollection, GeometryObject, Feature } from 'geojson';
-import GeometryObjectTable from './geometry-object-table';
+import GeometryObjectPreview from './geometry-object-preview';
 import { GeometryProperties } from '../shared/models';
 
 interface FeatureCollectionTableProps {
   collection: FeatureCollection<GeometryObject, GeometryProperties>;
 }
 
-function FeatureCollectionTable({ collection }: FeatureCollectionTableProps) {
+function FeatureCollectionPreview({ collection }: FeatureCollectionTableProps) {
   return (
     <div className="App">
       {collection.features.map(
@@ -22,7 +22,7 @@ function FeatureCollectionTable({ collection }: FeatureCollectionTableProps) {
             {renderProperties(feature.properties)}
             <hr />
             <h3>Geometry:</h3>
-            <GeometryObjectTable geometry={feature.geometry} />
+            <GeometryObjectPreview geometry={feature.geometry} />
           </div>
         )
       )}
@@ -41,4 +41,4 @@ const renderProperties = (properties: GeometryProperties) =>
     </div>
   ));
 
-export default FeatureCollectionTable;
+export default FeatureCollectionPreview;

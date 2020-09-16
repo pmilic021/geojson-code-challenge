@@ -24,7 +24,7 @@ interface GeometryObjectTableProps {
   geometry: GeometryObject;
 }
 
-function GeometryObjectTable({ geometry }: GeometryObjectTableProps) {
+function GeometryObjectPreview({ geometry }: GeometryObjectTableProps) {
   return isPoint(geometry)
     ? renderPoint(geometry)
     : isMultiPoint(geometry)
@@ -47,7 +47,7 @@ const renderGeometryCollection = (collection: GeometryCollection) => (
     GeometryCollection: [
     {collection.geometries.map((geometry: GeometryObject, i: number) => (
       <React.Fragment key={`geometry-collection-${i}`}>
-        <GeometryObjectTable geometry={geometry} />
+        <GeometryObjectPreview geometry={geometry} />
         <br />
       </React.Fragment>
     ))}
@@ -145,4 +145,4 @@ const renderMultiPolygon = (multiPolygon: MultiPolygon) => (
   </div>
 );
 
-export default GeometryObjectTable;
+export default GeometryObjectPreview;

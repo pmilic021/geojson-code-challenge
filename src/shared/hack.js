@@ -1,3 +1,5 @@
+// USAGE OF THIS FILE IS EXPLAINED IN README
+// this file is copied from `node_modules/osmtogeojson/index.js`
 /* eslint-disable */
 var _ = require('osmtogeojson/lodash.custom.js');
 var rewind = require('@mapbox/geojson-rewind');

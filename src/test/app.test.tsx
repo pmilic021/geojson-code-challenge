@@ -11,6 +11,7 @@ import {
   polygonResponse,
   lineStringResponse,
 } from './mocks';
+import { matcher } from './utils';
 
 const server = setupServer(
   rest.get(
@@ -198,11 +199,3 @@ test('renders correctly multiPolygon dataset', async () => {
     )
   ).toBeInTheDocument();
 });
-
-// Text is broken by multiple elements so we have to use custom matcher
-const matcher = (targetString: string) => (
-  content: string,
-  node: HTMLElement
-) => {
-  return node.textContent === targetString;
-};

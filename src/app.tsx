@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './app.css';
 import { getMapDataByBB } from './services/openstreetmap.service';
 import { FeatureCollection, GeometryObject } from 'geojson';
-import FeatureCollectionTable from './components/feature-collection-table';
+import FeatureCollectionPreview from './components/feature-collection-preview';
 import { AABB, GeometryProperties } from './shared/models';
 import { formatNumber, isValidAabb, parseNumber } from './shared/utils';
 
@@ -104,7 +104,7 @@ function App() {
       {featureCollection === null ? (
         <h6>No Data</h6>
       ) : (
-        <FeatureCollectionTable collection={featureCollection} />
+        <FeatureCollectionPreview collection={featureCollection} />
       )}
     </div>
   );
